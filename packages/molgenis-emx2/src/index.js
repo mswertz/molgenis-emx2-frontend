@@ -1,17 +1,17 @@
-import IconBar from '../elements/IconBar'
+import IconBar from './components/elements/IconBar'
 
-import IconAction from '../elements/IconAction'
-import IconDanger from '../elements/IconDanger'
+import IconAction from './components/elements/IconAction'
+import IconDanger from './components/elements/IconDanger'
 
-import Spinner from '../elements/Spinner'
-import LayoutCard from '../elements/LayoutCard'
-import MessageError from '../elements/MessageError'
-import InputBoolean from '../elements/InputBoolean'
+import Spinner from './components/elements/Spinner'
+import LayoutCard from './components/elements/LayoutCard'
+import MessageError from './components/elements/MessageError'
+import InputBoolean from './components/elements/InputBoolean'
 
-import ColumnEditModal from '../molecules/ColumnEditModal'
-import ColumnDropModal from '../molecules/ColumnDropModal'
+import ColumnEditModal from './components/molecules/ColumnEditModal'
+import ColumnDropModal from './components/molecules/ColumnDropModal'
 
-export default {
+export {
   IconBar,
   IconAction,
   IconDanger,

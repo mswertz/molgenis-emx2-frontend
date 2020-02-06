@@ -1,7 +1,13 @@
 {
   "name": "@mswertz/molgenis-emx2-app-schema",
   "version": "0.0.2",
-  "private": true,
+  "main": "dist/index.html",
+  "files": [
+    "dist/*"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
