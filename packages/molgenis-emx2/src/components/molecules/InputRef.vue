@@ -1,16 +1,16 @@
 <template>
   <FormGroup v-bind="$props">
-    <select class="custom-select" :id="id" @click="openSelect">
+    <select :id="id" class="custom-select" @click="openSelect">
       <option v-if="value && !showSelect" :value="value" selected>{{value}}</option>
     </select>
-    <LayoutModal :title="title" @close="closeSelect" :show="showSelect">
+    <LayoutModal :title="title" :show="showSelect" @close="closeSelect">
       <template v-slot:body>
         <MessageError v-if="error">{{error}}</MessageError>
         <TableSearch
           :schema="schema"
           :table="refTable"
-          :selectColumn="refColumn"
-          :defaultValue="value"
+          :select-column="refColumn"
+          :default-value="value"
           @select="select"
           @deselect="deselect"
         />
@@ -31,12 +31,6 @@ import FormGroup from '../elements/_formGroup'
 import ButtonAlt from '../elements/ButtonAlt'
 
 export default {
-  extends: _baseInput,
-  data: function () {
-    return {
-      showSelect: false
-    }
-  },
   components: {
     TableSearch,
     MessageError,
@@ -44,10 +38,16 @@ export default {
     FormGroup,
     ButtonAlt
   },
+  extends: _baseInput,
   props: {
     schema: String,
     refTable: String,
     refColumn: String
+  },
+  data: function () {
+    return {
+      showSelect: false
+    }
   },
   computed: {
     title () {

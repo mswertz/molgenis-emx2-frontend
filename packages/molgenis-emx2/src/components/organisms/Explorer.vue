@@ -8,7 +8,7 @@
             v-if="tableNames"
             v-model="table"
             :items="tableNames"
-            :defaultValue="table"
+            :default-value="table"
             label="Choose table: "
           />
         </template>
@@ -29,6 +29,15 @@ import { request } from 'graphql-request'
 
 /** For viewing data in the tables of one schema  */
 export default {
+  components: {
+    MessageError,
+    LayoutNavTabs,
+    TableEdit,
+    LayoutCard
+  },
+  props: {
+    schema: String
+  },
   data: function () {
     return {
       table: null,
@@ -37,14 +46,28 @@ export default {
       key: 0
     }
   },
-  props: {
-    schema: String
+  computed: {
+    endpoint () {
+      return '/api/graphql/' + this.schema
+    },
+    title () {
+      return 'Table: ' + this.table
+    },
+    account () {
+      return this.$store.state.account.email
+    }
   },
-  components: {
-    MessageError,
-    LayoutNavTabs,
-    TableEdit,
-    LayoutCard
+  watch: {
+    username () {
+      this.load()
+    },
+    account () {
+      this.load()
+      this.refresh()
+    }
+  },
+  created () {
+    this.load()
   },
   methods: {
     refresh () {
@@ -72,29 +95,6 @@ export default {
             this.error = error
           }
         })
-    }
-  },
-  created () {
-    this.load()
-  },
-  computed: {
-    endpoint () {
-      return '/api/graphql/' + this.schema
-    },
-    title () {
-      return 'Table: ' + this.table
-    },
-    account () {
-      return this.$store.state.account.email
-    }
-  },
-  watch: {
-    username () {
-      this.load()
-    },
-    account () {
-      this.load()
-      this.refresh()
     }
   }
 }

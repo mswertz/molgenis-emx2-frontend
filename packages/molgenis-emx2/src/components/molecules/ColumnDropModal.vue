@@ -27,23 +27,23 @@ import ButtonAlt from '../elements/ButtonAlt'
 import ButtonAction from '../elements/ButtonAction'
 
 export default {
-  data: function () {
-    return {
-      success: null,
-      error: null
-    }
-  },
-  props: {
-    schema: String,
-    table: String,
-    column: String
-  },
   components: {
     LayoutModal,
     MessageSuccess,
     MessageError,
     ButtonAction,
     ButtonAlt
+  },
+  props: {
+    schema: String,
+    table: String,
+    column: String
+  },
+  data: function () {
+    return {
+      success: null,
+      error: null
+    }
   },
   computed: {
     endpoint () {

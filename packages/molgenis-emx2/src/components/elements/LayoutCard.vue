@@ -1,6 +1,6 @@
 <template>
   <div class="card" :class="{'card-fullscreen': fullscreen}">
-    <div class="card-header text-center" ref="header">
+    <div ref="header" class="card-header text-center">
       <h4 v-if="title">{{title}}</h4>
       <slot name="header" />
       <IconAction
@@ -9,11 +9,11 @@
         @click="fullscreen = !fullscreen"
       />
     </div>
-    <div class="card-body" v-scroll-lock="fullscreen" :style="bodyheight">
+    <div v-scroll-lock="fullscreen" class="card-body" :style="bodyheight">
       <!-- @slot Use this slot to place the card content -->
       <slot />
     </div>
-    <div class="card-footer" ref="footer">Created by MOLGENIS.</div>
+    <div ref="footer" class="card-footer">Created by MOLGENIS.</div>
   </div>
 </template>
 
@@ -22,6 +22,12 @@ import IconAction from './IconAction'
 import VScrollLock from 'v-scroll-lock'
 
 export default {
+  directives: {
+    VScrollLock
+  },
+  components: {
+    IconAction
+  },
   props: {
     /** Title that is shown on the card (optional) */
     title: String
@@ -30,9 +36,6 @@ export default {
     return {
       fullscreen: false
     }
-  },
-  directives: {
-    VScrollLock
   },
   computed: {
     bodyheight () {
@@ -46,9 +49,6 @@ export default {
     // version () {
     //   return this.$store.state.version
     // }
-  },
-  components: {
-    IconAction
   }
 }
 </script>

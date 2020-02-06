@@ -3,19 +3,19 @@
     <span class="sr-only">Loading...</span>
   </div>
   <form-group v-else v-bind="$props">
-    <select class="custom-select" :id="id" @click="openSelect" multiple>
+    <select :id="id" class="custom-select" multiple @click="openSelect">
       <option v-for="item in value" :key="item" :value="item" selected>{{
         item
       }}</option>
     </select>
-    <LayoutModal :title="title" @close="closeSelect" :show="showSelect">
+    <LayoutModal :title="title" :show="showSelect" @close="closeSelect">
       <template v-slot:body>
         <MessageError v-if="error">{{ error }}</MessageError>
         <TableSearch
           :schema="schema"
           :table="refTable"
-          :selectColumn="refColumn"
-          :defaultValue="value"
+          :select-column="refColumn"
+          :default-value="value"
           @select="select"
           @deselect="deselect"
         />
@@ -37,13 +37,6 @@ import TableSearch from './TableSearch'
 import MessageError from '../elements/MessageError'
 
 export default {
-  extends: _baseInput,
-  mixins: [_graphqlTableMixin],
-  data: function () {
-    return {
-      showSelect: false
-    }
-  },
   components: {
     ButtonAlt,
     FormGroup,
@@ -51,9 +44,16 @@ export default {
     LayoutModal,
     MessageError
   },
+  extends: _baseInput,
+  mixins: [_graphqlTableMixin],
   props: {
     refTable: String,
     refColumn: String
+  },
+  data: function () {
+    return {
+      showSelect: false
+    }
   },
   computed: {
     title () {
@@ -61,6 +61,11 @@ export default {
     },
     table () {
       return this.refTable
+    }
+  },
+  watch: {
+    refTable () {
+      this.table = this.refTable
     }
   },
   methods: {
@@ -76,11 +81,6 @@ export default {
     },
     openSelect () {
       this.showSelect = true
-    }
-  },
-  watch: {
-    refTable () {
-      this.table = this.refTable
     }
   }
 }

@@ -26,20 +26,20 @@
         <InputString
           v-model="column.name"
           label="Column name"
-          :defaultValue="defaultValue ? defaultValue.name : undefined"
+          :default-value="defaultValue ? defaultValue.name : undefined"
           :readonly="defaultValue != undefined"
         />
         <InputSelect
           v-model="column.columnType"
           label="Column type"
-          :defaultValue="defaultValue ? defaultValue.columnType : undefined"
+          :default-value="defaultValue ? defaultValue.columnType : undefined"
           :items="columnTypes"
         />
         <InputSelect
           v-if="column.columnType == 'REF'"
           v-model="column.refTable"
           label="Referenced table"
-          :defaultValue="defaultValue ? defaultValue.refTable : undefined"
+          :default-value="defaultValue ? defaultValue.refTable : undefined"
           :items="tables"
         />
         <!--InputSelect
@@ -52,12 +52,12 @@
         <InputBoolean
           v-model="column.nullable"
           label="Nullable"
-          :defaultValue="defaultValue && defaultValue.nullable ? true : false"
+          :default-value="defaultValue && defaultValue.nullable ? true : false"
         />
         <InputText
           v-model="column.description"
           label="Description"
-          :defaultValue="defaultValue ? defaultValue.description : undefined"
+          :default-value="defaultValue ? defaultValue.description : undefined"
         />
       </LayoutForm>
     </template>
@@ -111,6 +111,20 @@ const columnTypes = [
 ]
 
 export default {
+  components: {
+    MessageSuccess,
+    MessageError,
+    ButtonAction,
+    ButtonAlt,
+    LayoutModal,
+    InputBoolean,
+    InputString,
+    InputText,
+    InputSelect,
+    LayoutForm,
+    Spinner,
+    SigninForm
+  },
   props: {
     schema: String,
     table: String,
@@ -127,20 +141,6 @@ export default {
       success: null,
       showLogin: false
     }
-  },
-  components: {
-    MessageSuccess,
-    MessageError,
-    ButtonAction,
-    ButtonAlt,
-    LayoutModal,
-    InputBoolean,
-    InputString,
-    InputText,
-    InputSelect,
-    LayoutForm,
-    Spinner,
-    SigninForm
   },
   computed: {
     title () {
@@ -174,6 +174,11 @@ export default {
       return null
     }
   },
+  watch: {
+    column () {
+      this.$emit('input', this.column)
+    }
+  },
   methods: {
     executeCommand () {
       this.loading = true
@@ -205,11 +210,6 @@ export default {
           } else this.error = error
         })
       this.loading = false
-    }
-  },
-  watch: {
-    column () {
-      this.$emit('input', this.column)
     }
   }
 }

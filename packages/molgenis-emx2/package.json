@@ -1,8 +1,5 @@
 {
   "name": "@mswertz/molgenis-emx2",
-  "sideEffects": [
-    "*.css"
-  ],
   "version": "0.0.4",
   "main": "dist/index.js",
   "module": "src/index.js",
@@ -31,7 +28,6 @@
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
     "vue-cli-plugin-styleguidist": "^4.4.2",
     "vue-flatpickr-component": "^8.1.5",
     "vue-template-compiler": "^2.6.10"

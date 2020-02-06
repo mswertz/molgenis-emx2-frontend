@@ -101,14 +101,14 @@ table th:hover .hover {
 </style>
 
 <script>
-import { request } from 'graphql-request'
-import Vue from 'vue'
-import VScrollLock from 'v-scroll-lock' 
+import { request } from "graphql-request";
+import Vue from "vue";
+import VScrollLock from "v-scroll-lock";
 
-Vue.use(VScrollLock)
+Vue.use(VScrollLock);
 
-import {  
-    IconBar,
+import {
+  IconBar,
   IconAction,
   IconDanger,
   Spinner,
@@ -117,8 +117,7 @@ import {
   InputBoolean,
   ColumnEditModal,
   ColumnDropModal
-  } from '@mswertz/molgenis-emx2'
-
+} from "@mswertz/molgenis-emx2";
 
 export default {
   props: {
@@ -135,7 +134,7 @@ export default {
     ColumnEditModal,
     ColumnDropModal
   },
-  data: function () {
+  data: function() {
     return {
       showAttributes: false,
       loading: false,
@@ -146,59 +145,61 @@ export default {
       columnAlter: false,
       columnAdd: false,
       columnDrop: false
-    }
+    };
   },
   methods: {
     // alter(column) {},
     // drop(column) {},
-    loadSchema () {
-      this.loading = true
+    loadSchema() {
+      this.loading = true;
       request(
         this.endpoint,
-        '{_meta{tables{name,pkey,description,columns{name,columnType,pkey,refTable,refColumn,nullable,description}}}}'
+        "{_meta{tables{name,pkey,description,columns{name,columnType,pkey,refTable,refColumn,nullable,description}}}}"
       )
         .then(data => (this.tables = data._meta.tables))
         .catch(error => {
-          if (error.response.error.status === 403) { this.error = 'Forbidden. Do you need to login?' } else this.error = error.response.error
-        })
-      this.loading = false
+          if (error.response.error.status === 403) {
+            this.error = "Forbidden. Do you need to login?";
+          } else this.error = error.response.error;
+        });
+      this.loading = false;
     }
   },
   computed: {
-    endpoint () {
-      return '/api/graphql/' + this.schema
+    endpoint() {
+      return "/api/graphql/" + this.schema;
     },
-    yuml () {
-      if (!this.tables) return ''
-      let res = 'http://yuml.me/diagram/scruffy;dir:lr/class/'
+    yuml() {
+      if (!this.tables) return "";
+      let res = "http://yuml.me/diagram/scruffy;dir:lr/class/";
       // classes
       this.tables.forEach(table => {
-        res += `[${table.name}`
+        res += `[${table.name}`;
         if (this.showAttributes) {
-          res += '|'
+          res += "|";
           table.columns.forEach(column => {
-            res += `${column.name};`
-          })
+            res += `${column.name};`;
+          });
         }
-        res += `],`
-      })
+        res += `],`;
+      });
       // relations
       this.tables.forEach(table => {
         table.columns.forEach(column => {
-          if (column.columnType === 'REF') {
-            res += `[${table.name}]->[${column.refTable}],`
-          } else if (column.columnType === 'REF_ARRAY') {
-            res += `[${table.name}]-*>[${column.refTable}],`
+          if (column.columnType === "REF") {
+            res += `[${table.name}]->[${column.refTable}],`;
+          } else if (column.columnType === "REF_ARRAY") {
+            res += `[${table.name}]-*>[${column.refTable}],`;
           }
-        })
-      })
-      return res
+        });
+      });
+      return res;
     }
   },
-  created () {
-    this.loadSchema()
+  created() {
+    this.loadSchema();
   }
-}
+};
 </script>
 
 <docs>

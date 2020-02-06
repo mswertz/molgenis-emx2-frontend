@@ -32,15 +32,15 @@
     <LayoutModal v-else-if="view === 'edit'" title="Update member">
       <template v-slot:body>
         <InputString
+          v-model="currentMember.user"
           label="Email address"
           readonly
-          v-model="currentMember.user"
-          :defaultValue="currentMember.user"
+          :default-value="currentMember.user"
         />
         <InputSelect
-          label="Role"
           v-model="currentMember.role"
-          :defaultValue="currentMember.role"
+          label="Role"
+          :default-value="currentMember.role"
           :items="roles"
         />
       </template>
@@ -68,15 +68,6 @@ import InputString from '../elements/InputString'
 import InputSelect from '../elements/InputSelect'
 
 export default {
-  data: function () {
-    return {
-      view: 'list',
-      currentMember: {},
-      roles: ['Owner', 'Manager', 'Editor', 'Viewer'],
-      members: null,
-      error: null
-    }
-  },
   components: {
     MessageError,
     IconAction,
@@ -91,6 +82,31 @@ export default {
   },
   props: {
     schema: String
+  },
+  data: function () {
+    return {
+      view: 'list',
+      currentMember: {},
+      roles: ['Owner', 'Manager', 'Editor', 'Viewer'],
+      members: null,
+      error: null
+    }
+  },
+  computed: {
+    endpoint () {
+      return '/api/graphql/' + this.schema
+    },
+    account () {
+      return this.$store.state.account.email
+    }
+  },
+  watch: {
+    account () {
+      this.loadMembers()
+    }
+  },
+  created () {
+    this.loadMembers()
   },
   methods: {
     showAdd () {
@@ -108,22 +124,6 @@ export default {
           this.members = data._meta.members
         })
         .catch(error => (this.error = error.response.error))
-    }
-  },
-  computed: {
-    endpoint () {
-      return '/api/graphql/' + this.schema
-    },
-    account () {
-      return this.$store.state.account.email
-    }
-  },
-  created () {
-    this.loadMembers()
-  },
-  watch: {
-    account () {
-      this.loadMembers()
     }
   }
 }

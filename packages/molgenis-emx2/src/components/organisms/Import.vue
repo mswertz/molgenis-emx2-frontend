@@ -1,7 +1,7 @@
 <template>
   <Spinner v-if="loading" />
   <div v-else>
-    {{loading}}
+    {{ loading }}
     <MessageError v-if="error">{{ error }}</MessageError>
     <MessageSuccess v-if="success">{{ success }}</MessageSuccess>
     <InputFile v-model="file" :file="file" />
@@ -20,17 +20,6 @@ import Spinner from '../elements/Spinner.vue'
 
 /** Data import tool */
 export default {
-  data: function () {
-    return {
-      file: null,
-      error: null,
-      success: null,
-      loading: false
-    }
-  },
-  props: {
-    schema: String
-  },
   components: {
     ButtonAction,
     ButtonAlt,
@@ -38,6 +27,17 @@ export default {
     MessageError,
     MessageSuccess,
     Spinner
+  },
+  props: {
+    schema: String
+  },
+  data: function () {
+    return {
+      file: null,
+      error: null,
+      success: null,
+      loading: false
+    }
   },
   methods: {
     upload () {

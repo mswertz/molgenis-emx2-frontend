@@ -9,9 +9,9 @@
       >
         <input
           :id="id+index"
+          v-model="value"
           class="form-check-input"
           type="radio"
-          v-model="value"
           :value="item"
           :checked="defaultValue === item"
           :aria-describedby="id + 'Help'"

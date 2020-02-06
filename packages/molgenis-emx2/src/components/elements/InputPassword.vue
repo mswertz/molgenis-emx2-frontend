@@ -1,12 +1,12 @@
 <template>
   <form-group :id="id" :label="label" :placeholder="placeholder" :help="help">
     <input
+      :id="id"
+      v-model="value"
       class="form-control"
       type="password"
-      :id="id"
       :aria-describedby="id + 'Help'"
       :placeholder="placeholder"
-      v-model="value"
       v-on="$listeners"
     />
   </form-group>

@@ -1,5 +1,5 @@
 <template>
-  <TableSearch :schema="schema" :table="table" :key="key">
+  <TableSearch :key="key" :schema="schema" :table="table">
     <template v-slot:colheader>
       <RowButtonAdd :schema="schema" :table="table" @close="refresh" />
     </template>
@@ -30,16 +30,16 @@ import TableSearch from './TableSearch'
 import IconBar from '../elements/IconBar'
 
 export default {
-  props: {
-    schema: String,
-    table: String
-  },
   components: {
     RowButtonAdd,
     RowButtonDelete,
     RowButtonEdit,
     TableSearch,
     IconBar
+  },
+  props: {
+    schema: String,
+    table: String
   },
   data: function () {
     return {

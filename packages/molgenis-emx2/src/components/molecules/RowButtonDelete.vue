@@ -32,13 +32,6 @@ import MessageSuccess from '../elements/MessageSuccess'
 import { request } from 'graphql-request'
 
 export default {
-  extends: RowButtonAdd,
-  data: function () {
-    return {
-      success: null,
-      error: null
-    }
-  },
   components: {
     LayoutModal,
     IconDanger,
@@ -47,8 +40,15 @@ export default {
     MessageSuccess,
     MessageError
   },
+  extends: RowButtonAdd,
   props: {
     pkey: String
+  },
+  data: function () {
+    return {
+      success: null,
+      error: null
+    }
   },
   computed: {
     title () {

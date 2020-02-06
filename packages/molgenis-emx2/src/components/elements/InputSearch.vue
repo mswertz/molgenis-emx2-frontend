@@ -7,11 +7,11 @@
         </button>
       </span>
       <input
+        :id="id"
         v-model="value"
         class="form-control border-left-0 border"
         type="search"
         :placeholder="placeholder"
-        :id="id"
       />
     </div>
   </form-group>

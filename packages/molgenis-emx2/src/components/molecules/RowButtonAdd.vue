@@ -15,11 +15,6 @@ import RowEditModal from './RowEditModal.vue'
 import IconAction from '../elements/IconAction'
 
 export default {
-  data: function () {
-    return {
-      open: false
-    }
-  },
   components: {
     RowEditModal,
     IconAction
@@ -27,6 +22,11 @@ export default {
   props: {
     schema: String,
     table: String
+  },
+  data: function () {
+    return {
+      open: false
+    }
   },
   computed: {
     title () {

@@ -17,11 +17,11 @@ import RowEditModal from './RowEditModal.vue'
 import IconAction from '../elements/IconAction'
 
 export default {
-  extends: RowButtonAdd,
   components: {
     RowEditModal,
     IconAction
   },
+  extends: RowButtonAdd,
   props: {
     pkey: String
   },

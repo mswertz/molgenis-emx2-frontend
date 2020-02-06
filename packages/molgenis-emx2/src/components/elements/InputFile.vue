@@ -2,13 +2,13 @@
   <form-group v-bind="$props">
     <!-- hidden input-->
     <div class="input-group">
-      <input type="file" style="display:none" ref="file" :id="id" @change="handleFileUpload" />
+      <input :id="id" ref="file" type="file" style="display:none" @change="handleFileUpload" />
       <input
         class="form-control active"
         :class="{'is-invalid':error}"
+        :placeholder="filename"
         @click="$refs.file.click()"
         @keydown.prevent
-        :placeholder="filename"
       />
       <div class="input-group-append">
         <button

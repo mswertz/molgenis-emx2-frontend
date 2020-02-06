@@ -2,8 +2,8 @@
   <form-group v-bind="$props">
     <div class="input-group">
       <flat-pickr
-        style="background: white"
         v-model="value"
+        style="background: white"
         class="form-control active"
         :class="{'is-invalid':error}"
         :config="config"
@@ -44,6 +44,9 @@ import 'flatpickr/dist/flatpickr.css'
 import '../../../public/css/bootstrap-molgenis-blue.css'
 
 export default {
+  components: {
+    flatPickr
+  },
   extends: _baseInput,
   data: function () {
     return {
@@ -53,9 +56,6 @@ export default {
         allowInput: false
       }
     }
-  },
-  components: {
-    flatPickr
   }
 }
 </script>

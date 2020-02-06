@@ -1,6 +1,6 @@
 <template>
   <form-group v-bind="$props">
-    <select class="custom-select" :id="id" v-model="value">
+    <select :id="id" v-model="value" class="custom-select">
       <option selected disabled></option>
       <option v-for="(item,index) in items" :key="index" :value="item">{{item}}</option>
     </select>

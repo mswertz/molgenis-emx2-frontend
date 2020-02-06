@@ -5,7 +5,7 @@
 <script>
 import Molgenis from './components/pages/Molgenis'
 export default {
-  name: 'app',
+  name: 'App',
   components: {
     Molgenis
   }

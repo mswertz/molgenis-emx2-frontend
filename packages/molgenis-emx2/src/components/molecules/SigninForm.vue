@@ -9,16 +9,16 @@
       <LayoutForm>
         <MessageError v-if="error">{{ error }}</MessageError>
         <InputString
+          v-model="email"
           label="Email"
           placeholder="Enter email adress"
           help="Please enter the provided email address"
-          v-model="email"
         />
         <InputPassword
+          v-model="password"
           label="Password"
           placeholder="Enter password"
           help="Please enter the provided password"
-          v-model="password"
           @keyup.enter="signin"
         />
       </LayoutForm>
@@ -46,15 +46,6 @@ import { request } from 'graphql-request'
 const endpoint = '/api/graphql'
 
 export default {
-  data: function () {
-    return {
-      email: null,
-      password: null,
-      loading: false,
-      error: null,
-      success: null
-    }
-  },
   components: {
     ButtonAction,
     ButtonAlt,
@@ -65,6 +56,15 @@ export default {
     LayoutForm,
     LayoutModal,
     Spinner
+  },
+  data: function () {
+    return {
+      email: null,
+      password: null,
+      loading: false,
+      error: null,
+      success: null
+    }
   },
   methods: {
     signin () {

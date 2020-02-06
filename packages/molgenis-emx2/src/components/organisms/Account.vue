@@ -8,9 +8,9 @@
       </span>
       <span v-else>
         <ButtonAction @click="showSigninForm = true">Sign in</ButtonAction>
-        <SigninForm v-if="showSigninForm" @cancel="closeSigninForm" :error="error" />
+        <SigninForm v-if="showSigninForm" :error="error" @cancel="closeSigninForm" />
         <ButtonAlt @click="showSignupForm = true">Sign up</ButtonAlt>
-        <SignupForm v-if="showSignupForm" @cancel="closeSignupForm" :error="error" />
+        <SignupForm v-if="showSignupForm" :error="error" @cancel="closeSignupForm" />
       </span>
     </div>
   </div>
@@ -27,6 +27,13 @@ import { request } from 'graphql-request'
 const endpoint = '/api/graphql'
 /** Element that is supposed to be put in menu holding all controls for user account */
 export default {
+  components: {
+    ButtonAction,
+    SigninForm,
+    SignupForm,
+    Spinner,
+    ButtonAlt
+  },
   data: function () {
     return {
       /** @ignore */
@@ -36,37 +43,9 @@ export default {
       loading: false
     }
   },
-  components: {
-    ButtonAction,
-    SigninForm,
-    SignupForm,
-    Spinner,
-    ButtonAlt
-  },
   computed: {
     email () {
       return this.$store.state.account.email
-    }
-  },
-  methods: {
-    closeSigninForm () {
-      this.showSigninForm = false
-      this.error = null
-    },
-    closeSignupForm () {
-      this.showSignupForm = false
-      this.error = null
-    },
-    signout () {
-      this.loading = true
-      request(endpoint, `mutation{signout{status}}`)
-        .then(data => {
-          if (data.signout.status === 'SUCCESS') {
-            this.$store.commit('signout')
-          } else this.error = 'sign out failed'
-        })
-        .catch(error => (this.error = 'internal server error' + error))
-      this.loading = false
     }
   },
   watch: {
@@ -91,6 +70,27 @@ export default {
           this.error = 'internal server error ' + error
         }
       })
+  },
+  methods: {
+    closeSigninForm () {
+      this.showSigninForm = false
+      this.error = null
+    },
+    closeSignupForm () {
+      this.showSignupForm = false
+      this.error = null
+    },
+    signout () {
+      this.loading = true
+      request(endpoint, `mutation{signout{status}}`)
+        .then(data => {
+          if (data.signout.status === 'SUCCESS') {
+            this.$store.commit('signout')
+          } else this.error = 'sign out failed'
+        })
+        .catch(error => (this.error = 'internal server error' + error))
+      this.loading = false
+    }
   }
 }
 </script>

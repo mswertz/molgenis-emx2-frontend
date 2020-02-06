@@ -6,7 +6,7 @@
           <th scope="col" style="width: 1px;">
             <slot name="colheader" />
           </th>
-          <th scope="col" v-for="col in columns" :key="col">
+          <th v-for="col in columns" :key="col" scope="col">
             <b>{{ col }}</b>
           </th>
         </tr>
@@ -59,6 +59,13 @@ export default {
       this.$emit('input', this.selectedItems)
     }
   },
+  created () {
+    if (this.defaultValue instanceof Array) {
+      this.selectedItems = this.defaultValue
+    } else {
+      this.selectedItems.push(this.defaultValue)
+    }
+  },
   methods: {
     isSelected (row) {
       return (
@@ -80,13 +87,6 @@ export default {
           this.$emit('select', row[this.selectColumn])
         }
       }
-    }
-  },
-  created () {
-    if (this.defaultValue instanceof Array) {
-      this.selectedItems = this.defaultValue
-    } else {
-      this.selectedItems.push(this.defaultValue)
     }
   }
 }

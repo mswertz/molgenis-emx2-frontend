@@ -23,7 +23,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body" v-scroll-lock="show">
+          <div v-scroll-lock="show" class="modal-body">
             <!-- @slot contents to be shown on the modal -->
             <slot name="body" />
           </div>
@@ -52,6 +52,9 @@
 import VScrollLock from 'v-scroll-lock'
 
 export default {
+  directives: {
+    VScrollLock
+  },
   props: {
     /** Shown as the title of the model */
     title: String,
@@ -60,9 +63,6 @@ export default {
       type: Boolean,
       default: true
     }
-  },
-  directives: {
-    VScrollLock
   },
   methods: {
     close () {

@@ -1,18 +1,18 @@
 <template >
   <div>
-    <InputString v-if="columnType ==='STRING'" v-bind="$props" v-model="value" />
-    <InputInt v-else-if="columnType ==='INT'" v-bind="$props" v-model="value" />
-    <InputDecimal v-else-if="columnType ==='DECIMAL'" v-bind="$props" v-model="value" />
-    <InputBoolean v-else-if="columnType ==='BOOL'" v-bind="$props" v-model="value" />
-    <InputRef v-else-if="columnType ==='REF'" v-bind="$props" v-model="value" />
-    <InputDate v-else-if="columnType ==='DATE'" v-bind="$props" v-model="value" />
-    <InputDateTime v-else-if="columnType ==='DATETIME'" v-bind="$props" v-model="value" />
+    <InputString v-if="columnType ==='STRING'" v-model="value" v-bind="$props" />
+    <InputInt v-else-if="columnType ==='INT'" v-model="value" v-bind="$props" />
+    <InputDecimal v-else-if="columnType ==='DECIMAL'" v-model="value" v-bind="$props" />
+    <InputBoolean v-else-if="columnType ==='BOOL'" v-model="value" v-bind="$props" />
+    <InputRef v-else-if="columnType ==='REF'" v-model="value" v-bind="$props" />
+    <InputDate v-else-if="columnType ==='DATE'" v-model="value" v-bind="$props" />
+    <InputDateTime v-else-if="columnType ==='DATETIME'" v-model="value" v-bind="$props" />
     <InputRefArray
       v-else-if="columnType ==='REF_ARRAY' || columnType ==='REFBACK'"
-      v-bind="$props"
       v-model="value"
+      v-bind="$props"
     />
-    <InputString v-else-if="columnType ==='STRING_ARRAY'" v-bind="$props" v-model="value" />
+    <InputString v-else-if="columnType ==='STRING_ARRAY'" v-model="value" v-bind="$props" />
     <div v-else>UNSUPPORTED TYPE {{columnType}}</div>
   </div>
 </template>
@@ -29,14 +29,6 @@ import InputDateTime from '../elements/InputDateTime'
 import InputRefArray from './InputRefArray'
 
 export default {
-  extends: _baseInput,
-  props: {
-    schema: String,
-    columnType: String,
-    refTable: String,
-    refColumn: String,
-    defaultValue: String
-  },
   components: {
     InputString,
     InputInt,
@@ -46,6 +38,14 @@ export default {
     InputDate,
     InputDateTime,
     InputRefArray
+  },
+  extends: _baseInput,
+  props: {
+    schema: String,
+    columnType: String,
+    refTable: String,
+    refColumn: String,
+    defaultValue: String
   }
 }
 </script>

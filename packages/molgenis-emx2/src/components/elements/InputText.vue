@@ -1,11 +1,11 @@
 <template>
   <form-group :id="id" :label="label" :help="help">
     <textarea
-      class="form-control"
       :id="id"
+      v-model="value"
+      class="form-control"
       :aria-describedby="id + 'Help'"
       :placeholder="placeholder"
-      v-model="value"
       v-on="$listeners"
     />
   </form-group>

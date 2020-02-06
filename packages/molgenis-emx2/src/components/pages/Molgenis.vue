@@ -2,53 +2,6 @@
   <Spinner v-if="loading" />
   <MessageError v-else-if="error">{{ error }}</MessageError>
   <div v-else>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarText"
-        aria-controls="navbarText"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand" href="#" @click.prevent="view = 'home'">
-        <img
-          src="https://master.dev.molgenis.org/img/Logo_Blue_Small.png"
-          alt
-        />
-      </a>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul v-if="schema" class="navbar-nav mr-auto">
-          <li class="nav-item" :class="{ active: view === 'explorer' }">
-            <a class="nav-link" href="#" @click.prevent="view = 'explorer'"
-              >Tables</a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" @click.prevent="view = 'schema'"
-              >Schema</a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" @click.prevent="view = 'import'"
-              >Import</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              :href="'/api/playground.html?schema=/api/graphql/' + schema"
-              target="_blank"
-              >GraphQL</a
-            >
-          </li>
-        </ul>
-      </div>
-      <Account />
-    </nav>
     <div class="container" style="margin-top: 60px;">
       <div v-if="view === 'home'">
         <div class="jumbotron">
@@ -75,11 +28,19 @@ import MessageError from '../elements/MessageError'
 
 import Explorer from '../organisms/Explorer.vue'
 // import Schema from '../organisms/Schema.vue'
-import Account from '../organisms/Account.vue'
+// import Account from '../organisms/Account.vue'
 import Import from '../organisms/Import.vue'
 
 export default {
-  data: function () {
+  components: {
+    Explorer,
+    // Schema,
+    // Account,
+    Import,
+    InputSelect,
+    MessageError
+  },
+  data: function() {
     return {
       view: 'home',
       schema: null,
@@ -88,21 +49,21 @@ export default {
       loading: false
     }
   },
-  components: {
-    Explorer,
-    // Schema,
-    Account,
-    Import,
-    InputSelect,
-    MessageError
-  },
   computed: {
-    account () {
+    account() {
       return this.$store.state.account.email
     }
   },
+  watch: {
+    account() {
+      this.getSchemaList()
+    }
+  },
+  created() {
+    this.getSchemaList()
+  },
   methods: {
-    getSchemaList () {
+    getSchemaList() {
       this.loading = true
       request('/api/graphql', '{Schemas{name}}')
         .then(data => {
@@ -111,14 +72,6 @@ export default {
         .catch(error => (this.error = 'internal server error' + error))
       this.loading = false
     }
-  },
-  watch: {
-    account () {
-      this.getSchemaList()
-    }
-  },
-  created () {
-    this.getSchemaList()
   }
 }
 </script>

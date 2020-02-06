@@ -17,22 +17,6 @@ export default {
       searchTerms: null
     }
   },
-  methods: {
-    reload () {
-      this.loading = true
-      request(this.endpoint, this.graphql)
-        .then(data => {
-          this.error = null
-          this.data = data[this.table]['data']
-          this.count = data[this.table]['data_agg']['count']
-          this.loading = false
-        })
-        .catch(error => {
-          this.error = 'internal server error' + error
-          this.loading = false
-        })
-    }
-  },
   computed: {
     graphql () {
       let search =
@@ -57,6 +41,22 @@ export default {
   watch: {
     searchTerms: 'reload',
     metadata: 'reload'
+  },
+  methods: {
+    reload () {
+      this.loading = true
+      request(this.endpoint, this.graphql)
+        .then(data => {
+          this.error = null
+          this.data = data[this.table]['data']
+          this.count = data[this.table]['data_agg']['count']
+          this.loading = false
+        })
+        .catch(error => {
+          this.error = 'internal server error' + error
+          this.loading = false
+        })
+    }
   }
 }
 </script>

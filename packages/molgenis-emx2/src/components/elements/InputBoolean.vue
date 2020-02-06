@@ -1,13 +1,13 @@
 <template>
-  <InputRadio :items="[true,false]" v-bind="$props" v-model="value" />
+  <InputRadio v-model="value" :items="[true,false]" v-bind="$props" />
 </template>
 
 <script>
 import _baseInput from './_baseInput'
 import InputRadio from './InputRadio'
 export default {
-  extends: _baseInput,
-  components: { InputRadio }
+  components: { InputRadio },
+  extends: _baseInput
 }
 </script>
 

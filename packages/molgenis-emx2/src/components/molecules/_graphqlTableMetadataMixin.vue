@@ -17,6 +17,18 @@ export default {
       error: null
     }
   },
+  computed: {
+    endpoint () {
+      return '/api/graphql/' + this.schema
+    }
+  },
+  watch: {
+    schema: 'reloadMetadata',
+    table: 'reloadMetadata'
+  },
+  created () {
+    this.reloadMetadata()
+  },
   methods: {
     reloadMetadata () {
       this.loading = true
@@ -34,18 +46,6 @@ export default {
         .catch(error => (this.error = 'internal server error' + error))
       this.loading = false
     }
-  },
-  computed: {
-    endpoint () {
-      return '/api/graphql/' + this.schema
-    }
-  },
-  watch: {
-    schema: 'reloadMetadata',
-    table: 'reloadMetadata'
-  },
-  created () {
-    this.reloadMetadata()
   }
 }
 </script>

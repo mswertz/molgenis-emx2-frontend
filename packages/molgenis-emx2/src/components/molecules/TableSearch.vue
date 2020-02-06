@@ -10,8 +10,8 @@
         v-model="selectedItems"
         :columns="columns"
         :rows="rows"
-        :selectColumn="selectColumn"
-        :defaultValue="defaultValue"
+        :select-column="selectColumn"
+        :default-value="defaultValue"
         @select="select"
         @deselect="deselect"
       >
@@ -41,11 +41,6 @@ import Pagination from '../elements/Pagination.vue'
 import Spinner from '../elements/Spinner.vue'
 
 export default {
-  extends: _graphqlTableMixin,
-  props: {
-    defaultValue: [],
-    selectColumn: String
-  },
   components: {
     DataTable,
     MessageError,
@@ -53,29 +48,16 @@ export default {
     Pagination,
     Spinner
   },
+  extends: _graphqlTableMixin,
+  props: {
+    defaultValue: [],
+    selectColumn: String
+  },
   data: function () {
     return {
       selectedItems: [],
       page: 1,
       loading: true
-    }
-  },
-  methods: {
-    select (value) {
-      this.$emit('select', value)
-    },
-    deselect (value) {
-      this.$emit('deselect', value)
-    }
-  },
-  watch: {
-    selectedItems () {
-      this.$emit('input', this.selectedItems)
-    },
-    page () {
-      this.loading = true
-      this.offset = this.limit * (this.page - 1)
-      this.reload()
     }
   },
   computed: {
@@ -105,6 +87,24 @@ export default {
         })
       }
       return this.data
+    }
+  },
+  watch: {
+    selectedItems () {
+      this.$emit('input', this.selectedItems)
+    },
+    page () {
+      this.loading = true
+      this.offset = this.limit * (this.page - 1)
+      this.reload()
+    }
+  },
+  methods: {
+    select (value) {
+      this.$emit('select', value)
+    },
+    deselect (value) {
+      this.$emit('deselect', value)
     }
   }
 }

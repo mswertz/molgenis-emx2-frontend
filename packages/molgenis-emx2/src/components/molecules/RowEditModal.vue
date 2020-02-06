@@ -11,11 +11,11 @@
             v-model="value[column.name]"
             :schema="schema"
             :label="column.name"
-            :columnType="column.columnType"
-            :refTable="column.refTable"
-            :refColumn="column.refColumn"
+            :column-type="column.columnType"
+            :ref-table="column.refTable"
+            :ref-column="column.refColumn"
             :nullable="column.nullable"
-            :defaultValue="defaultValue ? defaultValue[column.name] : undefined"
+            :default-value="defaultValue ? defaultValue[column.name] : undefined"
             :error="errorPerColumn[column.name]"
             :readonly="column.readonly || (pkey && column.pkey)"
           />
@@ -48,20 +48,6 @@ import RowFormInput from './RowFormInput.vue'
 import { request } from 'graphql-request'
 
 export default {
-  mixins: [_graphqlTableMixin],
-  data: function () {
-    return {
-      showLogin: false,
-      value: {},
-      errorPerColumn: {},
-      success: null,
-      defaultValue: null
-    }
-  },
-  props: {
-    /** when updating existing record, this is the primary key value */
-    pkey: String
-  },
   components: {
     LayoutForm,
     RowFormInput,
@@ -71,6 +57,70 @@ export default {
     MessageError,
     MessageSuccess,
     SigninForm
+  },
+  mixins: [_graphqlTableMixin],
+  props: {
+    /** when updating existing record, this is the primary key value */
+    pkey: String
+  },
+  data: function () {
+    return {
+      showLogin: false,
+      value: {},
+      errorPerColumn: {},
+      success: null,
+      defaultValue: null
+    }
+  },
+  computed: {
+    // override from tableMixin
+    graphql () {
+      // todo: must become a typed variable in the query?
+      return `{${this.table}(filter:{${this.metadata.pkey}:{equals:"${this.pkey}"}}){data_agg{count}data{${this.columnNames}}}}`
+    },
+    title () {
+      if (this.pkey) {
+        return `update ${this.metadata.name}`
+      } else {
+        return `insert ${this.metadata.name}`
+      }
+    }
+  },
+  watch: {
+    data (val) {
+      if (val && val.length > 0) {
+        let data = val[0]
+        let defaultValue = {}
+        this.metadata.columns.forEach(column => {
+          if (data[column.name]) {
+            if (column.columnType === 'REF') {
+              defaultValue[column.name] = data[column.name][column.refColumn]
+            } else if (['REF_ARRAY', 'REFBACK'].includes(column.columnType)) {
+              if (data[column.name]) {
+                defaultValue[column.name] = []
+                data[column.name].forEach(value =>
+                  defaultValue[column.name].push(value[column.refColumn])
+                )
+              }
+              // TODO array types
+            } else {
+              defaultValue[column.name] = data[column.name]
+            }
+          }
+        })
+        this.defaultValue = defaultValue
+      }
+    },
+    // validation happens here
+    value: {
+      handler () {
+        this.validate()
+      },
+      deep: true
+    }
+  },
+  created () {
+    this.validate()
   },
   methods: {
     loginSuccess () {
@@ -142,56 +192,6 @@ export default {
         })
       }
     }
-  },
-  computed: {
-    // override from tableMixin
-    graphql () {
-      // todo: must become a typed variable in the query?
-      return `{${this.table}(filter:{${this.metadata.pkey}:{equals:"${this.pkey}"}}){data_agg{count}data{${this.columnNames}}}}`
-    },
-    title () {
-      if (this.pkey) {
-        return `update ${this.metadata.name}`
-      } else {
-        return `insert ${this.metadata.name}`
-      }
-    }
-  },
-  watch: {
-    data (val) {
-      if (val && val.length > 0) {
-        let data = val[0]
-        let defaultValue = {}
-        this.metadata.columns.forEach(column => {
-          if (data[column.name]) {
-            if (column.columnType === 'REF') {
-              defaultValue[column.name] = data[column.name][column.refColumn]
-            } else if (['REF_ARRAY', 'REFBACK'].includes(column.columnType)) {
-              if (data[column.name]) {
-                defaultValue[column.name] = []
-                data[column.name].forEach(value =>
-                  defaultValue[column.name].push(value[column.refColumn])
-                )
-              }
-              // TODO array types
-            } else {
-              defaultValue[column.name] = data[column.name]
-            }
-          }
-        })
-        this.defaultValue = defaultValue
-      }
-    },
-    // validation happens here
-    value: {
-      handler () {
-        this.validate()
-      },
-      deep: true
-    }
-  },
-  created () {
-    this.validate()
   }
 }
 </script>
