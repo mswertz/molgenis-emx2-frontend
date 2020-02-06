@@ -61,7 +61,7 @@
         </div>
       </div>
       <Explorer v-if="view === 'explorer'" :schema="schema" />
-      <Schema v-if="view === 'schema'" :schema="schema" />
+      <!--Schema v-if="view === 'schema'" :schema="schema" /-->
       <Import v-if="view === 'import'" :schema="schema" />
     </div>
   </div>
@@ -74,7 +74,7 @@ import InputSelect from '../elements/InputSelect.vue'
 import MessageError from '../elements/MessageError'
 
 import Explorer from '../organisms/Explorer.vue'
-import Schema from '../organisms/Schema.vue'
+// import Schema from '../organisms/Schema.vue'
 import Account from '../organisms/Account.vue'
 import Import from '../organisms/Import.vue'
 
@@ -90,7 +90,7 @@ export default {
   },
   components: {
     Explorer,
-    Schema,
+    // Schema,
     Account,
     Import,
     InputSelect,

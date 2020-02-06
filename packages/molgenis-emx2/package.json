@@ -1,5 +1,6 @@
 {
-  "name": "@mswertz/molgenis-emx2-ui",
+  "name": "@mswertz/molgenis-emx2",
+  "version": "0.1.0",
   "description": "General user interface for MOLGENIS EMX2",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -20,8 +21,6 @@
     "vuex": "^3.1.2"
   },
   "devDependencies": {
-    "@semantic-release/exec": "^5.0.0",
-    "@semantic-release/git": "^9.0.0",
     "@vue/cli-plugin-babel": "^4.1.0",
     "@vue/cli-plugin-eslint": "^4.1.2",
     "@vue/cli-service": "^4.1.0",
@@ -29,7 +28,6 @@
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "semantic-release": "^17.0.2",
     "vue-cli-plugin-styleguidist": "^4.4.2",
     "vue-flatpickr-component": "^8.1.5",
     "vue-template-compiler": "^2.6.10"
@@ -53,7 +51,7 @@
     "> 1%",
     "last 2 versions"
   ],
-  "homepage": "https://github.com/mswertz/molgenis-emx2-ui",
+
   "publishConfig": {
     "access": "public"
   },
@@ -62,9 +60,5 @@
       "master",
       "dev"
     ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mswertz/molgenis-emx2-ui.git"
   }
 }
