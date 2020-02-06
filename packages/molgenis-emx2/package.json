@@ -1,5 +1,8 @@
 {
   "name": "@mswertz/molgenis-emx2",
+  "sideEffects": [
+    "*.css"
+  ],
   "version": "0.0.3",
   "main": "dist/index.js",
   "module": "src/index.js",

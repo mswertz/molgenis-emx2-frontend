@@ -49,6 +49,8 @@
 </style>
 
 <script>
+import VScrollLock from 'v-scroll-lock'
+
 export default {
   props: {
     /** Shown as the title of the model */
@@ -58,6 +60,9 @@ export default {
       type: Boolean,
       default: true
     }
+  },
+  directives: {
+    VScrollLock
   },
   methods: {
     close () {

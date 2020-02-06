@@ -13,12 +13,13 @@
       <!-- @slot Use this slot to place the card content -->
       <slot />
     </div>
-    <div class="card-footer" ref="footer">Created by MOLGENIS. {{version}}</div>
+    <div class="card-footer" ref="footer">Created by MOLGENIS.</div>
   </div>
 </template>
 
 <script>
 import IconAction from './IconAction'
+import VScrollLock from 'v-scroll-lock'
 
 export default {
   props: {
@@ -30,6 +31,9 @@ export default {
       fullscreen: false
     }
   },
+  directives: {
+    VScrollLock
+  },
   computed: {
     bodyheight () {
       if (this.fullscreen) {
@@ -38,10 +42,10 @@ export default {
         return `height: calc(100vh - ${header + footer}px)`
       }
       return ''
-    },
-    version () {
-      return this.$store.state.version
     }
+    // version () {
+    //   return this.$store.state.version
+    // }
   },
   components: {
     IconAction

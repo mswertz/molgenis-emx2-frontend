@@ -102,8 +102,13 @@ table th:hover .hover {
 
 <script>
 import { request } from 'graphql-request'
+import Vue from 'vue'
+import VScrollLock from 'v-scroll-lock' 
 
-import {  IconBar,
+Vue.use(VScrollLock)
+
+import {  
+    IconBar,
   IconAction,
   IconDanger,
   Spinner,
@@ -111,7 +116,8 @@ import {  IconBar,
   MessageError,
   InputBoolean,
   ColumnEditModal,
-  ColumnDropModal} from '@mswertz/molgenis-emx2'
+  ColumnDropModal
+  } from '@mswertz/molgenis-emx2'
 
 
 export default {

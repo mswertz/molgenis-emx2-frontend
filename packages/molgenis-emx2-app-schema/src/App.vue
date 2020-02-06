@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-  <Schema/>
+  <Schema schema="pet store "/>
   </div>
 </template>
 
