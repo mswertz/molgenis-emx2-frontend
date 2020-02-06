@@ -1,6 +1,6 @@
 {
   "name": "@mswertz/molgenis-emx2-app-schema",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "dist/index.html",
   "files": [
     "dist/*"
@@ -14,7 +14,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@mswertz/molgenis-emx2": "^0.0.3",
+    "@mswertz/molgenis-emx2": "^0.0.4",
     "core-js": "^3.4.4",
     "graphql-request": "^1.8.2",
     "vue": "^2.6.10"
