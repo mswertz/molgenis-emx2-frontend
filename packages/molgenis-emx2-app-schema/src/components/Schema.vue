@@ -5,6 +5,7 @@
     <InputBoolean v-model="showAttributes" label="show attributes" :defaultValue="showAttributes" />
     <div style="overflow: auto; text-align:center" id="__top">
       <img :src="yuml" :key="showAttributes" />
+      test
     </div>|
     <span v-for="table in tables" :key="table.name">
       <a :href="'#'+table.name">{{table.name}}</a> |
